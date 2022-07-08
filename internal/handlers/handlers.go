@@ -97,6 +97,11 @@ func TransferMoney(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if users[0].Balance < 0 {
+		helpers.ThrowError(w, http.StatusBadRequest, errors.New("money cannot be negative"))
+		return
+	}
+
 	if sender.Balance < users[0].Balance {
 		helpers.ThrowError(w, http.StatusBadRequest, errors.New("too much money to send"))
 		return
