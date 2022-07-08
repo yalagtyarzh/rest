@@ -16,6 +16,11 @@ func (m *MemStorage) InsertUser(u models.User) error {
 	if ok {
 		return errors.New("user already exist")
 	}
+
+	if u.Balance < 0 {
+		return errors.New("cannot create user with negative money")
+	}
+
 	m.users[u.ID] = u
 	return nil
 }
